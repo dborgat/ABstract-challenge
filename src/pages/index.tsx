@@ -7,7 +7,6 @@ const inter = Inter({ subsets: ['latin'] });
 import { useEffect, useState } from 'react';
 import {
   Container,
-  Stack,
   Input,
   Button,
   SimpleGrid,
@@ -20,9 +19,14 @@ import {
   ModalContent,
   ModalCloseButton,
   useDisclosure,
+  Stack,
+  VStack,
 } from '@chakra-ui/react';
+
 import PokemonCard from '@/components/PokemonCard';
 import PokemonData from '@/components/PokemonData';
+import PokemonList from '@/components/PokemonList';
+import PokemonModal from '@/components/PokemonModal';
 
 export default function Home() {
   const pokemonDataModal = useDisclosure();
@@ -61,39 +65,33 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <Flex alignItems='center' minH='100vh' justifyContent='center'>
-        <Container maxW='container.lg'>
-          <Stack p='5' alignItems='center' spacing='5'>
-            <SimpleGrid spacing='5' columns={{ base: 1, md: 5 }}>
-              {pokemon.map((pokemon) => (
-                <Box
-                  as='button'
-                  key={pokemon.id}
-                  onClick={() => handleViewPokemon(pokemon)}
-                >
-                  <PokemonCard pokemon={pokemon} />
-                </Box>
-              ))}
-            </SimpleGrid>
+      {/* <Flex alignItems='center' minH='100vh' justifyContent='center'>
+        <VStack spacing={4} align='stretch'>
+          <SimpleGrid spacing='5' columns={{ base: 1, md: 5 }}>
+            {pokemon.map((pokemon) => (
+              <Box
+                as='button'
+                key={pokemon.id}
+                onClick={() => handleViewPokemon(pokemon)}
+              >
+                <PokemonCard pokemon={pokemon} />
+              </Box>
+            ))}
+          </SimpleGrid>
 
-            <Button isLoading={false} onClick={handleNextPage}>
-              Cargas más
-            </Button>
-          </Stack>
-        </Container>
-      </Flex>
-      <Modal {...pokemonDataModal}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader textTransform='capitalize'>
-            {selectedPokemon?.name}
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            {selectedPokemon && <PokemonData pokemon={selectedPokemon} />}
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+          <Button isLoading={false} onClick={handleNextPage}>
+            Cargas más
+          </Button>
+        </VStack>
+      </Flex> */}
+      <PokemonList
+        handleViewPokemon={handleViewPokemon}
+        handleNextPage={handleNextPage}
+      />
+      <PokemonModal
+        pokemonDataModal={pokemonDataModal}
+        selectedPokemon={selectedPokemon}
+      />
     </>
   );
 }
