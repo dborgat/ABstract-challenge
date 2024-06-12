@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios, { all } from 'axios';
-import { PokemonInterface, RootObject } from '@/types';
+import { PokemonInterface, RootObject, CatchedPokemons } from '@/types';
 import { useDisclosure } from '@chakra-ui/react';
 
 export const usePokemon = () => {
@@ -16,10 +16,6 @@ export const usePokemon = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [catched, setCatched] = useState(false);
-
-    const fetchMorePokemon = () => {
-        setPageNumber((prev) => prev + 20);
-    };
 
     useEffect(() => {
         const fetchPokemon = async () => {
@@ -52,21 +48,39 @@ export const usePokemon = () => {
             }
         }
         fetchGlobalPokemons();
-    }, []);
-
-    useEffect(() => {
-        const fetchCatchedPokemons = async () => {
-            try {
-                const { data } = await axios.get('api/catched');
-                console.log(data, '----');
-                setCatched(data);
-            } catch (err) {
-                setError('Failed to fetch Pokémon data');
-            }
-        }
         fetchCatchedPokemons();
     }, []);
 
+    const fetchCatchedPokemons = async () => {
+        try {
+            const { data } = await axios.get('api/catched');
+            setCatched(data);
+        } catch (err) {
+            setError('Failed to fetch Pokémon data');
+        }
+    }
 
-    return { allPokemons, fetchedPokemons, loading, error, fetchMorePokemon, selectedPokemon, setSelectedPokemon, pokemonDataModal, allPokemonsQuantity, catched, setCatched };
+    const addCatchedPokemon = async (pokemon: CatchedPokemons) => {
+        try {
+            await axios.post('api/catched', pokemon);
+            fetchCatchedPokemons()
+        } catch (err) {
+            setError('Failed to fetch Pokémon data');
+        }
+    }
+
+    const deleteCatchedPokemon = async (pokemonId: number) => {
+        try {
+            await axios.delete(`api/catched/${pokemonId}`);
+            fetchCatchedPokemons()
+        } catch (err) {
+            setError('Failed to fetch Pokémon data');
+        }
+    }
+
+    const fetchMorePokemon = () => {
+        setPageNumber((prev) => prev + 20);
+    };
+
+    return { allPokemons, fetchedPokemons, loading, error, fetchMorePokemon, selectedPokemon, setSelectedPokemon, pokemonDataModal, allPokemonsQuantity, catched, setCatched, addCatchedPokemon, deleteCatchedPokemon };
 };

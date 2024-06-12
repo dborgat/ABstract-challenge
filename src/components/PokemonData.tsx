@@ -14,13 +14,18 @@ import {
 export default function PokemonData({
   selectedPokemon,
   catched,
+  addCatchedPokemon,
+  deleteCatchedPokemon,
 }: {
   selectedPokemon: RootObject;
   catched: CatchedPokemons[];
+  addCatchedPokemon: (pokemon: CatchedPokemons) => void;
+  deleteCatchedPokemon: (pokemonId: number) => void;
 }) {
   const infoRequired = ['weight', 'height'] as const;
   const isCatched = (element: CatchedPokemons) =>
     element.id === selectedPokemon.id;
+  const isCatchedPokemon = catched.some(isCatched);
 
   return (
     <Stack spacing='5' pb='5'>
@@ -28,7 +33,15 @@ export default function PokemonData({
         <Box position='absolute' right='0' zIndex='99'>
           <Checkbox
             as='b'
-            isChecked={!catched ? false : catched.some(isCatched)}
+            isChecked={isCatchedPokemon}
+            onChange={() => {
+              isCatchedPokemon
+                ? deleteCatchedPokemon(selectedPokemon.id)
+                : addCatchedPokemon({
+                    id: selectedPokemon.id,
+                    name: selectedPokemon.name,
+                  });
+            }}
           >
             Catched
           </Checkbox>

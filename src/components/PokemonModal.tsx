@@ -14,10 +14,14 @@ const PokemonModal = ({
   pokemonDataModal,
   selectedPokemon,
   catched,
+  addCatchedPokemon,
+  deleteCatchedPokemon,
 }: {
   pokemonDataModal: any;
   selectedPokemon: RootObject | undefined;
   catched: CatchedPokemons[];
+  addCatchedPokemon: (pokemon: CatchedPokemons) => void;
+  deleteCatchedPokemon: (pokemonId: number) => void;
 }) => {
   return (
     <Modal {...pokemonDataModal}>
@@ -29,7 +33,12 @@ const PokemonModal = ({
         <ModalCloseButton />
         <ModalBody>
           {selectedPokemon && (
-            <PokemonData selectedPokemon={selectedPokemon} catched={catched} />
+            <PokemonData
+              selectedPokemon={selectedPokemon}
+              catched={catched}
+              addCatchedPokemon={addCatchedPokemon}
+              deleteCatchedPokemon={deleteCatchedPokemon}
+            />
           )}
         </ModalBody>
       </ModalContent>

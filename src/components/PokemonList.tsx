@@ -16,6 +16,8 @@ const PokemonList = () => {
     selectedPokemon,
     allPokemonsQuantity,
     catched,
+    addCatchedPokemon,
+    deleteCatchedPokemon,
   } = usePokemon();
 
   if (error) return <Text color='red.500'>{error}</Text>;
@@ -54,6 +56,8 @@ const PokemonList = () => {
         pokemonDataModal={pokemonDataModal}
         selectedPokemon={selectedPokemon}
         catched={catched}
+        addCatchedPokemon={addCatchedPokemon}
+        deleteCatchedPokemon={deleteCatchedPokemon}
       />
     </VStack>
   );

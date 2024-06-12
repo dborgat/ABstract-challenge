@@ -1,7 +1,9 @@
 import React from 'react';
-import { Box, Flex, Spacer, Image } from '@chakra-ui/react';
+import { Box, Flex, Spacer, Image, Text } from '@chakra-ui/react';
+import { usePokemon } from '@/hooks/usePokemon';
 
 const Navbar = () => {
+  const { catched } = usePokemon();
   return (
     <Flex
       as='nav'
@@ -15,15 +17,13 @@ const Navbar = () => {
       zIndex='1'
     >
       <Box p='4'>
-        <Image
-          boxSize='30px'
-          src='/pokeball.svg'
-          alt='Pokeball'
-        />
+        <Image boxSize='30px' src='/pokeball.svg' alt='Pokeball' />
       </Box>
       <Spacer />
-      <Box p='4' bg='green.400'>
-        Box 2
+      <Box p='4'>
+        <Text fontSize='20px' color='white'>
+          Tenes {catched.length} Pokemons !
+        </Text>
       </Box>
     </Flex>
   );
