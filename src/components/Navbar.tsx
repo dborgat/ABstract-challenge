@@ -16,7 +16,6 @@ const Navbar = () => {
     >
       <Box p='4'>
         <Image
-          borderRadius='full'
           boxSize='30px'
           src='/pokeball.svg'
           alt='Pokeball'
