@@ -9,15 +9,11 @@ import {
   Box,
   Flex,
 } from '@chakra-ui/react';
-import { log } from 'console';
+import { usePokemon } from '@/context/PokemonContext';
 
-export default function PokemonCard({
-  pokemon,
-  pokemonsCatched,
-}: {
-  pokemon: RootObject;
-  pokemonsCatched: CatchedPokemons[];
-}) {
+export default function PokemonCard({ pokemon }: { pokemon: RootObject }) {
+  const { pokemonsCatched } = usePokemon();
+
   const isCatched = (element: CatchedPokemons) => element.id === pokemon.id;
 
   return (
