@@ -1,4 +1,4 @@
-import { RootObject } from '@/types';
+import { CatchedPokemons, RootObject } from '@/types';
 import {
   Box,
   AspectRatio,
@@ -10,23 +10,28 @@ import {
   HStack,
   Checkbox,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
 
 export default function PokemonData({
   selectedPokemon,
+  catched,
 }: {
   selectedPokemon: RootObject;
+  catched: CatchedPokemons[];
 }) {
-  console.log(selectedPokemon);
-  const [catched, setCatched] = useState(false);
-
   const infoRequired = ['weight', 'height'] as const;
+  const isCatched = (element: CatchedPokemons) =>
+    element.id === selectedPokemon.id;
 
   return (
     <Stack spacing='5' pb='5'>
       <Stack spacing='5' position='relative'>
         <Box position='absolute' right='0' zIndex='99'>
-          <Checkbox as='b'>Catched</Checkbox>
+          <Checkbox
+            as='b'
+            isChecked={!catched ? false : catched.some(isCatched)}
+          >
+            Catched
+          </Checkbox>
         </Box>
         <AspectRatio w='full' ratio={1}>
           <Image
@@ -53,14 +58,14 @@ export default function PokemonData({
             <Text fontSize='sm' as='b'>
               Movimientos
             </Text>
-            <Text as='b'>{selectedPokemon.moves.length}</Text>
+            <Text as='b'>{selectedPokemon?.moves?.length}</Text>
           </Stack>
           <Stack>
             <Text fontSize='sm' as='b'>
               Tipos
             </Text>
             <HStack>
-              {selectedPokemon?.types.map((type) => (
+              {selectedPokemon?.types?.map((type) => (
                 <Badge
                   size='xs'
                   key={type.slot}
@@ -77,7 +82,7 @@ export default function PokemonData({
       </Stack>
 
       <Stack spacing='5' p='5' bg='gray.100' borderRadius='xl'>
-        {selectedPokemon.stats.map((stat) => (
+        {selectedPokemon?.stats?.map((stat) => (
           <Stack key={stat.stat.url}>
             <Text
               fontSize='xs'
