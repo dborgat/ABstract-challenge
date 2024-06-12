@@ -1,41 +1,54 @@
-import {
-  Box,
-  Button,
-  Flex,
-  SimpleGrid,
-  Spinner,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, Button, SimpleGrid, Text, VStack } from '@chakra-ui/react';
 import PokemonCard from './PokemonCard';
 import { usePokemon } from '../hooks/usePokemon';
+import PokemonModal from './PokemonModal';
+import { useDisclosure } from '@chakra-ui/react';
 
-const PokemonList = ({ handleViewPokemon, handleNextPage }: any) => {
-  const { pokemon, loading, error } = usePokemon();
+const PokemonList = () => {
+  const pokemonDataModal = useDisclosure();
 
-  if (loading) return <Spinner />;
+  const {
+    allPokemons,
+    loading,
+    error,
+    setSelectedPokemon,
+    fetchMorePokemon,
+    selectedPokemon,
+    AllPokemonsQuantity,
+  } = usePokemon();
+
   if (error) return <Text color='red.500'>{error}</Text>;
 
   return (
-    <Flex alignItems='center' minH='100vh' justifyContent='center'>
-      <VStack spacing={4} align='stretch'>
-        <SimpleGrid spacing='5' columns={{ base: 1, md: 5 }}>
-          {pokemon.map((pokemon) => (
-            <Box
-              as='button'
-              key={pokemon.id}
-              onClick={() => handleViewPokemon(pokemon)}
-            >
-              <PokemonCard pokemon={pokemon} />
-            </Box>
-          ))}
-        </SimpleGrid>
-
-        <Button isLoading={false} onClick={handleNextPage}>
-          Cargas más
-        </Button>
-      </VStack>
-    </Flex>
+    <VStack spacing={4} align='stretch' minH='100vh' marginBottom='5'>
+      <SimpleGrid spacing='5' columns={{ base: 1, md: 5 }}>
+        {allPokemons.map((pokemon) => (
+          <Box
+            as='button'
+            key={pokemon.id}
+            onClick={() => {
+              setSelectedPokemon(pokemon), pokemonDataModal.onOpen();
+            }}
+          >
+            <PokemonCard pokemon={pokemon} />
+          </Box>
+        ))}
+      </SimpleGrid>
+      <Button
+        isLoading={loading}
+        onClick={fetchMorePokemon}
+        isDisabled={AllPokemonsQuantity === allPokemons.length}
+      >
+        {AllPokemonsQuantity === allPokemons.length
+          ? 'Ya cargaste todos los Pokemons'
+          : `Cargas más Pokémon, vas ${allPokemons.length} quedan
+        ${AllPokemonsQuantity - allPokemons.length} !`}
+      </Button>
+      <PokemonModal
+        pokemonDataModal={pokemonDataModal}
+        selectedPokemon={selectedPokemon}
+      />
+    </VStack>
   );
 };
 
