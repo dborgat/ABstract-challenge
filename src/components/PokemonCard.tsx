@@ -13,10 +13,10 @@ import { log } from 'console';
 
 export default function PokemonCard({
   pokemon,
-  catched,
+  pokemonsCatched,
 }: {
   pokemon: RootObject;
-  catched: CatchedPokemons[];
+  pokemonsCatched: CatchedPokemons[];
 }) {
   const isCatched = (element: CatchedPokemons) => element.id === pokemon.id;
 
@@ -30,7 +30,7 @@ export default function PokemonCard({
       alignItems='center'
       bgColor='gray.100'
     >
-      {catched && catched.some(isCatched) && (
+      {pokemonsCatched && pokemonsCatched.some(isCatched) && (
         <Flex alignItems='center'>
           <Text
             as='b'

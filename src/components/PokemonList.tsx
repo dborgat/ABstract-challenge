@@ -15,7 +15,7 @@ const PokemonList = () => {
     fetchMorePokemon,
     selectedPokemon,
     allPokemonsQuantity,
-    catched,
+    pokemonsCatched,
     addCatchedPokemon,
     deleteCatchedPokemon,
   } = usePokemon();
@@ -38,7 +38,7 @@ const PokemonList = () => {
               setSelectedPokemon(pokemon), pokemonDataModal.onOpen();
             }}
           >
-            <PokemonCard pokemon={pokemon} catched={catched} />
+            <PokemonCard pokemon={pokemon} pokemonsCatched={pokemonsCatched} />
           </Box>
         ))}
       </SimpleGrid>
@@ -55,7 +55,7 @@ const PokemonList = () => {
       <PokemonModal
         pokemonDataModal={pokemonDataModal}
         selectedPokemon={selectedPokemon}
-        catched={catched}
+        pokemonsCatched={pokemonsCatched}
         addCatchedPokemon={addCatchedPokemon}
         deleteCatchedPokemon={deleteCatchedPokemon}
       />

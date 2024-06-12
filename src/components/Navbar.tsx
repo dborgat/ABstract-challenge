@@ -3,7 +3,7 @@ import { Box, Flex, Spacer, Image, Text } from '@chakra-ui/react';
 import { usePokemon } from '@/hooks/usePokemon';
 
 const Navbar = () => {
-  const { catched } = usePokemon();
+  const { pokemonsCatched } = usePokemon();
   return (
     <Flex
       as='nav'
@@ -22,7 +22,7 @@ const Navbar = () => {
       <Spacer />
       <Box p='4'>
         <Text fontSize='20px' color='white'>
-          Tenes {catched.length} Pokemons !
+          Tenes {pokemonsCatched.length} Pokemons !
         </Text>
       </Box>
     </Flex>

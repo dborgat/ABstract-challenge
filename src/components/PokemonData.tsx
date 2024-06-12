@@ -13,19 +13,19 @@ import {
 
 export default function PokemonData({
   selectedPokemon,
-  catched,
+  pokemonsCatched,
   addCatchedPokemon,
   deleteCatchedPokemon,
 }: {
   selectedPokemon: RootObject;
-  catched: CatchedPokemons[];
+  pokemonsCatched: CatchedPokemons[];
   addCatchedPokemon: (pokemon: CatchedPokemons) => void;
   deleteCatchedPokemon: (pokemonId: number) => void;
 }) {
   const infoRequired = ['weight', 'height'] as const;
   const isCatched = (element: CatchedPokemons) =>
     element.id === selectedPokemon.id;
-  const isCatchedPokemon = catched.some(isCatched);
+  const isCatchedPokemon = pokemonsCatched.some(isCatched);
 
   return (
     <Stack spacing='5' pb='5'>

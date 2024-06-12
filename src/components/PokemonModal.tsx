@@ -13,13 +13,13 @@ import { CatchedPokemons, RootObject } from '@/types';
 const PokemonModal = ({
   pokemonDataModal,
   selectedPokemon,
-  catched,
+  pokemonsCatched,
   addCatchedPokemon,
   deleteCatchedPokemon,
 }: {
   pokemonDataModal: any;
   selectedPokemon: RootObject | undefined;
-  catched: CatchedPokemons[];
+  pokemonsCatched: CatchedPokemons[];
   addCatchedPokemon: (pokemon: CatchedPokemons) => void;
   deleteCatchedPokemon: (pokemonId: number) => void;
 }) => {
@@ -35,7 +35,7 @@ const PokemonModal = ({
           {selectedPokemon && (
             <PokemonData
               selectedPokemon={selectedPokemon}
-              catched={catched}
+              pokemonsCatched={pokemonsCatched}
               addCatchedPokemon={addCatchedPokemon}
               deleteCatchedPokemon={deleteCatchedPokemon}
             />

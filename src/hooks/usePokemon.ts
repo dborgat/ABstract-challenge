@@ -15,7 +15,7 @@ export const usePokemon = () => {
     const [allPokemonsQuantity, setAllPokemonQuantity] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const [catched, setCatched] = useState(false);
+    const [pokemonsCatched, setPokemonsCatched] = useState<CatchedPokemons[]>([]);
 
     useEffect(() => {
         const fetchPokemon = async () => {
@@ -54,7 +54,7 @@ export const usePokemon = () => {
     const fetchCatchedPokemons = async () => {
         try {
             const { data } = await axios.get('api/catched');
-            setCatched(data);
+            setPokemonsCatched(data);
         } catch (err) {
             setError('Failed to fetch Pokémon data');
         }
@@ -82,5 +82,5 @@ export const usePokemon = () => {
         setPageNumber((prev) => prev + 20);
     };
 
-    return { allPokemons, fetchedPokemons, loading, error, fetchMorePokemon, selectedPokemon, setSelectedPokemon, pokemonDataModal, allPokemonsQuantity, catched, setCatched, addCatchedPokemon, deleteCatchedPokemon };
+    return { allPokemons, fetchedPokemons, loading, error, fetchMorePokemon, selectedPokemon, setSelectedPokemon, pokemonDataModal, allPokemonsQuantity, pokemonsCatched, setPokemonsCatched, addCatchedPokemon, deleteCatchedPokemon };
 };
