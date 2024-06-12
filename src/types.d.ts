@@ -3,6 +3,11 @@ interface PokemonInterface {
     url: string;
 }
 
+export interface CatchedPokemons {
+    id: number;
+    name: string;
+}
+
 export interface RootObject {
     abilities: Ability2[];
     base_experience: number;

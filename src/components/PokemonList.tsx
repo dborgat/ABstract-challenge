@@ -15,10 +15,10 @@ const PokemonList = () => {
     fetchMorePokemon,
     selectedPokemon,
     allPokemonsQuantity,
+    catched,
   } = usePokemon();
 
   if (error) return <Text color='red.500'>{error}</Text>;
-
   return (
     <VStack
       spacing={4}
@@ -36,7 +36,7 @@ const PokemonList = () => {
               setSelectedPokemon(pokemon), pokemonDataModal.onOpen();
             }}
           >
-            <PokemonCard pokemon={pokemon} />
+            <PokemonCard pokemon={pokemon} catched={catched} />
           </Box>
         ))}
       </SimpleGrid>
@@ -53,6 +53,7 @@ const PokemonList = () => {
       <PokemonModal
         pokemonDataModal={pokemonDataModal}
         selectedPokemon={selectedPokemon}
+        catched={catched}
       />
     </VStack>
   );
