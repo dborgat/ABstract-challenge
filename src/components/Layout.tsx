@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
+import Navbar from './Navbar';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -7,8 +8,9 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <Box bg='gray' w='100%' p={4} color='white'>
+    <VStack minH='100vh' justifyContent='center'>
+      <Navbar />
       <main>{children}</main>
-    </Box>
+    </VStack>
   );
 }
