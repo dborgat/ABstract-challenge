@@ -17,6 +17,7 @@ export default function PokemonCard({ pokemon }: { pokemon: RootObject }) {
       w='full'
       borderRadius='xl'
       alignItems='center'
+      bgColor='gray.100'
     >
       <AspectRatio w='full' ratio={1}>
         <Image
@@ -29,7 +30,13 @@ export default function PokemonCard({ pokemon }: { pokemon: RootObject }) {
       </Text>
       <HStack>
         {pokemon?.types.map((type) => (
-          <Badge size='xs' key={type.slot}>
+          <Badge
+            size='xs'
+            key={type.slot}
+            bgColor='gray.300'
+            borderRadius='xl'
+            p='1'
+          >
             {type.type.name}
           </Badge>
         ))}

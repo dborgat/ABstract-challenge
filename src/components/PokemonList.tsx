@@ -2,7 +2,7 @@ import { Box, Button, SimpleGrid, Text, VStack } from '@chakra-ui/react';
 import PokemonCard from './PokemonCard';
 import { usePokemon } from '../hooks/usePokemon';
 import PokemonModal from './PokemonModal';
-import { Skeleton, useDisclosure } from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
 
 const PokemonList = () => {
   const pokemonDataModal = useDisclosure();
@@ -24,7 +24,7 @@ const PokemonList = () => {
       spacing={4}
       align='stretch'
       minH='100vh'
-      marginBottom='5'
+      paddingBottom='5'
       paddingTop='40'
     >
       <SimpleGrid spacing='5' columns={{ base: 1, md: 5 }}>
