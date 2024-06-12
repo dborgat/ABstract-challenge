@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { all } from 'axios';
 import { PokemonInterface, RootObject } from '@/types';
 import { useDisclosure } from '@chakra-ui/react';
 
@@ -9,10 +9,11 @@ export const usePokemon = () => {
     const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
 
     const [allPokemons, setAllPokemons] = useState<RootObject[]>([]);
+    const [fetchedPokemons, setFetchedPokemons] = useState<RootObject[]>([]);
     const [selectedPokemon, setSelectedPokemon] = useState<RootObject>();
     const [pageNumber, setPageNumber] = useState<number>(0);
-    const [AllPokemonsQuantity, setAllPokemonQuantity] = useState<number>(0);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [allPokemonsQuantity, setAllPokemonQuantity] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
     const fetchMorePokemon = () => {
@@ -28,8 +29,7 @@ export const usePokemon = () => {
                 const fetchedPokemon = (await Promise.all(promises)).map(
                     (res) => res.data
                 );
-                pageNumber === 0 && setAllPokemonQuantity(response.data.count);
-                setAllPokemons((prev) => [...prev, ...fetchedPokemon]);
+                setFetchedPokemons((prev) => [...prev, ...fetchedPokemon]);
             } catch (err) {
                 setError('Failed to fetch Pokémon data');
             } finally {
@@ -40,6 +40,20 @@ export const usePokemon = () => {
         fetchPokemon();
     }, [pageNumber]);
 
+    useEffect(() => {
+        const fetchGlobalPokemons = async () => {
+            try {
+                const { data } = await axios.get(`${BASE_URL}?limit=100000`);
+                setAllPokemons(data.results);
+                setAllPokemonQuantity(data.count);
+            } catch (err) {
+                setError('Failed to fetch Pokémon data');
+            }
+        }
 
-    return { allPokemons, loading, error, fetchMorePokemon, selectedPokemon, setSelectedPokemon, pokemonDataModal, AllPokemonsQuantity };
+        fetchGlobalPokemons();
+    }, []);
+
+
+    return { allPokemons, fetchedPokemons, loading, error, fetchMorePokemon, selectedPokemon, setSelectedPokemon, pokemonDataModal, allPokemonsQuantity };
 };
