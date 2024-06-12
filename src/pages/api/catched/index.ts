@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await db.push("/catchedPokemon[]", newPokemon);
       return res.status(200).json(newPokemon);
     } else {
-      return res.status(409).send("Pokemon ya existente");
+      return res.status(409).send("Pokemon already catched!");
     }
   }
   return res.status(405).send("Method not allowed.");

@@ -1,6 +1,5 @@
 import { JsonDB, Config } from "node-json-db";
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { CatchedPokemons } from "@/types";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const db = new JsonDB(new Config("db", true, false, "/"));
@@ -16,9 +15,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         "]"
       );
 
-      return res.status(200).send("Pokemon liberado");
+      return res.status(200).send("Pokemon released!");
     } catch {
-      return res.status(409).send("Pokemon no encontrado");
+      return res.status(409).send("Pokemon not found");
     }
   }
   return res.status(405).send("Method not allowed.");
