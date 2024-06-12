@@ -1,4 +1,5 @@
-import { CatchedPokemons, RootObject } from '@/types';
+import { usePokemon } from '@/context/PokemonContext';
+import { CatchedPokemons } from '@/types';
 import {
   Box,
   AspectRatio,
@@ -11,20 +12,17 @@ import {
   Checkbox,
 } from '@chakra-ui/react';
 
-export default function PokemonData({
-  selectedPokemon,
-  pokemonsCatched,
-  addCatchedPokemon,
-  deleteCatchedPokemon,
-}: {
-  selectedPokemon: RootObject;
-  pokemonsCatched: CatchedPokemons[];
-  addCatchedPokemon: (pokemon: CatchedPokemons) => void;
-  deleteCatchedPokemon: (pokemonId: number) => void;
-}) {
+export default function PokemonData() {
+  const {
+    selectedPokemon,
+    pokemonsCatched,
+    addCatchedPokemon,
+    deleteCatchedPokemon,
+  } = usePokemon();
+
   const infoRequired = ['weight', 'height'] as const;
   const isCatched = (element: CatchedPokemons) =>
-    element.id === selectedPokemon.id;
+    element.id === selectedPokemon?.id;
   const isCatchedPokemon = pokemonsCatched.some(isCatched);
 
   return (
@@ -36,10 +34,10 @@ export default function PokemonData({
             isChecked={isCatchedPokemon}
             onChange={() => {
               isCatchedPokemon
-                ? deleteCatchedPokemon(selectedPokemon.id)
+                ? deleteCatchedPokemon(selectedPokemon?.id ?? 0)
                 : addCatchedPokemon({
-                    id: selectedPokemon.id,
-                    name: selectedPokemon.name,
+                    id: selectedPokemon?.id ?? 0,
+                    name: selectedPokemon?.name ?? '',
                   });
             }}
           >
@@ -50,7 +48,7 @@ export default function PokemonData({
           <Image
             alt='pokemon image'
             objectFit='contain'
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${selectedPokemon.id}.png`}
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${selectedPokemon?.id}.png`}
           />
         </AspectRatio>
         <Stack direction='row' justifyContent='space-between'>
@@ -63,19 +61,19 @@ export default function PokemonData({
               >
                 {info}
               </Text>
-              <Text as='b'>{selectedPokemon[info]}</Text>
+              <Text as='b'>{selectedPokemon?.[info]}</Text>
             </Stack>
           ))}
 
           <Stack alignItems='center'>
             <Text fontSize='sm' as='b'>
-              Movimientos
+              Moves
             </Text>
             <Text as='b'>{selectedPokemon?.moves?.length}</Text>
           </Stack>
           <Stack>
             <Text fontSize='sm' as='b'>
-              Tipos
+              Types
             </Text>
             <HStack>
               {selectedPokemon?.types?.map((type) => (

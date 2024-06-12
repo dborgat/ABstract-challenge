@@ -2,6 +2,7 @@ import { CatchedPokemons, PokemonInterface, RootObject } from '@/types';
 import { useDisclosure } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useToast } from '@chakra-ui/react';
 
 interface CounterContextType {
   allPokemons: RootObject[];
@@ -26,6 +27,7 @@ const PokemonContext = createContext<CounterContextType | undefined>(undefined);
 export const PokemonProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const toast = useToast();
   const pokemonDataModal = useDisclosure();
 
   const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
@@ -89,18 +91,34 @@ export const PokemonProvider: React.FC<{ children: React.ReactNode }> = ({
   const addCatchedPokemon = async (pokemon: CatchedPokemons) => {
     try {
       await axios.post('api/catched', pokemon);
+      toast({
+        title: `You caught ${pokemon.name}!`,
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
       fetchCatchedPokemons();
     } catch (err) {
       setError('Failed to fetch Pokémon data');
+    } finally {
+      pokemonDataModal.onClose();
     }
   };
 
   const deleteCatchedPokemon = async (pokemonId: number) => {
     try {
-      await axios.delete(`api/catched/${pokemonId}`);
+      const res = await axios.delete(`api/catched/${pokemonId}`);
+      toast({
+        title: `${res.data}`,
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
       fetchCatchedPokemons();
     } catch (err) {
       setError('Failed to fetch Pokémon data');
+    } finally {
+      pokemonDataModal.onClose();
     }
   };
 

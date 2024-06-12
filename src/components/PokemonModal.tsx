@@ -8,21 +8,10 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react';
 import PokemonData from './PokemonData';
-import { CatchedPokemons, RootObject } from '@/types';
+import { usePokemon } from '@/context/PokemonContext';
 
-const PokemonModal = ({
-  pokemonDataModal,
-  selectedPokemon,
-  pokemonsCatched,
-  addCatchedPokemon,
-  deleteCatchedPokemon,
-}: {
-  pokemonDataModal: any;
-  selectedPokemon: RootObject | undefined;
-  pokemonsCatched: CatchedPokemons[];
-  addCatchedPokemon: (pokemon: CatchedPokemons) => void;
-  deleteCatchedPokemon: (pokemonId: number) => void;
-}) => {
+const PokemonModal = () => {
+  const { selectedPokemon, pokemonDataModal } = usePokemon();
   return (
     <Modal {...pokemonDataModal}>
       <ModalOverlay />
@@ -31,16 +20,7 @@ const PokemonModal = ({
           {selectedPokemon?.name}
         </ModalHeader>
         <ModalCloseButton />
-        <ModalBody>
-          {selectedPokemon && (
-            <PokemonData
-              selectedPokemon={selectedPokemon}
-              pokemonsCatched={pokemonsCatched}
-              addCatchedPokemon={addCatchedPokemon}
-              deleteCatchedPokemon={deleteCatchedPokemon}
-            />
-          )}
-        </ModalBody>
+        <ModalBody>{selectedPokemon && <PokemonData />}</ModalBody>
       </ModalContent>
     </Modal>
   );

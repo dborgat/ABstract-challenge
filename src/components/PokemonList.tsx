@@ -1,26 +1,28 @@
 import { Box, Button, SimpleGrid, Text, VStack } from '@chakra-ui/react';
 import PokemonCard from './PokemonCard';
-import { usePokemon } from '../hooks/usePokemon';
+import { usePokemon } from '@/context/PokemonContext';
 import PokemonModal from './PokemonModal';
-import { useDisclosure } from '@chakra-ui/react';
+import { Alert, AlertIcon } from '@chakra-ui/react';
 
 const PokemonList = () => {
-  const pokemonDataModal = useDisclosure();
-
   const {
     fetchedPokemons,
     loading,
     error,
     setSelectedPokemon,
     fetchMorePokemon,
-    selectedPokemon,
     allPokemonsQuantity,
-    pokemonsCatched,
-    addCatchedPokemon,
-    deleteCatchedPokemon,
+    pokemonDataModal,
   } = usePokemon();
 
-  if (error) return <Text color='red.500'>{error}</Text>;
+  if (error)
+    return (
+      <Alert status='error'>
+        <AlertIcon />
+        {error}
+      </Alert>
+    );
+
   return (
     <VStack
       spacing={4}
@@ -38,7 +40,7 @@ const PokemonList = () => {
               setSelectedPokemon(pokemon), pokemonDataModal.onOpen();
             }}
           >
-            <PokemonCard pokemon={pokemon} pokemonsCatched={pokemonsCatched} />
+            <PokemonCard pokemon={pokemon} />
           </Box>
         ))}
       </SimpleGrid>
@@ -48,17 +50,11 @@ const PokemonList = () => {
         isDisabled={allPokemonsQuantity === fetchedPokemons.length}
       >
         {allPokemonsQuantity === fetchedPokemons.length
-          ? 'Ya cargaste todos los Pokemons'
-          : `Cargas más Pokémon, vas ${fetchedPokemons.length} quedan
+          ? 'You have fetched all the Pokémon!'
+          : `Get more Pokemons, fetched ${fetchedPokemons.length} of
         ${allPokemonsQuantity - fetchedPokemons.length} !`}
       </Button>
-      <PokemonModal
-        pokemonDataModal={pokemonDataModal}
-        selectedPokemon={selectedPokemon}
-        pokemonsCatched={pokemonsCatched}
-        addCatchedPokemon={addCatchedPokemon}
-        deleteCatchedPokemon={deleteCatchedPokemon}
-      />
+      <PokemonModal />
     </VStack>
   );
 };
