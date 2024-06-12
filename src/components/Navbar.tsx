@@ -4,6 +4,7 @@ import { Box, Flex, Spacer, Image } from '@chakra-ui/react';
 const Navbar = () => {
   return (
     <Flex
+      as='nav'
       bg='tomato'
       w='100%'
       p={4}
