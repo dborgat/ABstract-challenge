@@ -1,6 +1,8 @@
 import { JsonDB, Config } from "node-json-db";
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { CatchedPokemons } from "@/types";
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const db = new JsonDB(new Config("db", true, false, "/"));
 
   if (req.method === "GET") {
@@ -10,7 +12,7 @@ export default async function handler(req, res) {
 
     return res
       .status(200)
-      .json(data.some((pokemon) => pokemon.id === Number(pokemonId)));
+      .json(data.some((pokemon: CatchedPokemons) => pokemon.id === Number(pokemonId)));
   } else if (req.method === "DELETE") {
     try {
       const query = req.query;
@@ -18,8 +20,8 @@ export default async function handler(req, res) {
 
       await db.delete(
         "/catchedPokemon[" +
-          (await db.getIndex("/catchedPokemon", Number(pokemonId))) +
-          "]"
+        (await db.getIndex("/catchedPokemon", Number(pokemonId))) +
+        "]"
       );
 
       return res.status(200).send("Pokemon liberado");
