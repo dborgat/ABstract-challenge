@@ -1,4 +1,4 @@
-interface PokemonInterface {
+export interface PokemonInterface {
     name: string;
     url: string;
 }
@@ -11,7 +11,7 @@ export interface CatchedPokemons {
 export interface RootObject {
     abilities: Ability2[];
     base_experience: number;
-    cries: Cries;
+    cries: { [key: string]: string | undefined };
     forms: Ability[];
     game_indices: Gameindex[];
     height: number;
@@ -30,16 +30,16 @@ export interface RootObject {
     types: Type[];
     weight: number;
 }
-export interface Type {
+interface Type {
     slot: number;
     type: Ability;
 }
-export interface Stat {
+interface Stat {
     base_stat: number;
     effort: number;
     stat: Ability;
 }
-export interface Sprites {
+interface Sprites {
     back_default: string;
     back_female?: any;
     back_shiny: string;
@@ -51,7 +51,7 @@ export interface Sprites {
     other: Other;
     versions: Versions;
 }
-export interface Versions {
+interface Versions {
     'generation-i': Generationi;
     'generation-ii': Generationii;
     'generation-iii': Generationiii;
@@ -61,21 +61,21 @@ export interface Versions {
     'generation-vii': Generationvii;
     'generation-viii': Generationviii;
 }
-export interface Generationviii {
+interface Generationviii {
     icons: Dreamworld;
 }
-export interface Generationvii {
+interface Generationvii {
     icons: Dreamworld;
     'ultra-sun-ultra-moon': Home;
 }
-export interface Generationvi {
+interface Generationvi {
     'omegaruby-alphasapphire': Home;
     'x-y': Home;
 }
-export interface Generationv {
+interface Generationv {
     'black-white': Blackwhite;
 }
-export interface Blackwhite {
+interface Blackwhite {
     animated: Showdown;
     back_default: string;
     back_female?: any;
@@ -86,35 +86,35 @@ export interface Blackwhite {
     front_shiny: string;
     front_shiny_female?: any;
 }
-export interface Generationiv {
+interface Generationiv {
     'diamond-pearl': Showdown;
     'heartgold-soulsilver': Showdown;
     platinum: Showdown;
 }
-export interface Generationiii {
+interface Generationiii {
     emerald: Officialartwork;
     'firered-leafgreen': Fireredleafgreen;
     'ruby-sapphire': Fireredleafgreen;
 }
-export interface Fireredleafgreen {
+interface Fireredleafgreen {
     back_default: string;
     back_shiny: string;
     front_default: string;
     front_shiny: string;
 }
-export interface Generationii {
+interface Generationii {
     crystal: Crystal;
     gold: Gold;
     silver: Gold;
 }
-export interface Gold {
+interface Gold {
     back_default: string;
     back_shiny: string;
     front_default: string;
     front_shiny: string;
     front_transparent: string;
 }
-export interface Crystal {
+interface Crystal {
     back_default: string;
     back_shiny: string;
     back_shiny_transparent: string;
@@ -124,11 +124,11 @@ export interface Crystal {
     front_shiny_transparent: string;
     front_transparent: string;
 }
-export interface Generationi {
+interface Generationi {
     'red-blue': Redblue;
     yellow: Redblue;
 }
-export interface Redblue {
+interface Redblue {
     back_default: string;
     back_gray: string;
     back_transparent: string;
@@ -136,13 +136,13 @@ export interface Redblue {
     front_gray: string;
     front_transparent: string;
 }
-export interface Other {
+interface Other {
     dream_world: Dreamworld;
     home: Home;
     'official-artwork': Officialartwork;
     showdown: Showdown;
 }
-export interface Showdown {
+interface Showdown {
     back_default: string;
     back_female?: any;
     back_shiny: string;
@@ -152,51 +152,51 @@ export interface Showdown {
     front_shiny: string;
     front_shiny_female?: any;
 }
-export interface Officialartwork {
+interface Officialartwork {
     front_default: string;
     front_shiny: string;
 }
-export interface Home {
+interface Home {
     front_default: string;
     front_female?: any;
     front_shiny: string;
     front_shiny_female?: any;
 }
-export interface Dreamworld {
+interface Dreamworld {
     front_default: string;
     front_female?: any;
 }
-export interface Move {
+interface Move {
     move: Ability;
     version_group_details: Versiongroupdetail[];
 }
-export interface Versiongroupdetail {
+interface Versiongroupdetail {
     level_learned_at: number;
     move_learn_method: Ability;
     version_group: Ability;
 }
-export interface Helditem {
+interface Helditem {
     item: Ability;
     version_details: Versiondetail[];
 }
-export interface Versiondetail {
+interface Versiondetail {
     rarity: number;
     version: Ability;
 }
-export interface Gameindex {
+interface Gameindex {
     game_index: number;
     version: Ability;
 }
-export interface Cries {
+interface Cries {
     latest: string;
     legacy: string;
 }
-export interface Ability2 {
+interface Ability2 {
     ability: Ability;
     is_hidden: boolean;
     slot: number;
 }
-export interface Ability {
+interface Ability {
     name: string;
     url: string;
 }
