@@ -1,10 +1,24 @@
-import { useDisclosure } from '@chakra-ui/react';
-import axios from 'axios';
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useToast } from '@chakra-ui/react';
-import { getPokemonList } from '@/services/pokemons';
-import { PokemonContextType } from '@/types/Context';
-import { CatchedPokemons, RootObject } from '@/types/Pokemon';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
+import { useDisclosure, useToast } from '@chakra-ui/react';
+import {
+  catchPokemon,
+  getAllPokemons,
+  getCatchedPokemons,
+  getPokemonList,
+  releasePokemon,
+} from '@/services/pokemons';
+import { PokemonContextType } from '@/types/PokemonContextType';
+import {
+  CatchedPokemons,
+  PokemonInterface,
+  PokemonApiResponse,
+} from '@/types/Pokemon';
 
 const PokemonContext = createContext<PokemonContextType | undefined>(undefined);
 
@@ -14,33 +28,57 @@ export const PokemonProvider: React.FC<{ children: React.ReactNode }> = ({
   const toast = useToast();
   const pokemonDataModal = useDisclosure();
 
-  const [fetchedPokemons, setFetchedPokemons] = useState<RootObject[]>([]);
-  const [selectedPokemon, setSelectedPokemon] = useState<RootObject>();
+  const [allPokemons, setAllPokemons] = useState<PokemonInterface[]>([]);
+  const [fetchedPokemons, setFetchedPokemons] = useState<PokemonApiResponse[]>(
+    []
+  );
+  const [selectedPokemon, setSelectedPokemon] = useState<PokemonApiResponse>({
+    id: 0,
+    name: '',
+    types: [],
+    height: 0,
+    weight: 0,
+    stats: [],
+    moves: [],
+  });
+
   const [pageNumber, setPageNumber] = useState<number>(0);
-  const [allPokemonsQuantity, setAllPokemonQuantity] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [pokemonsCatched, setPokemonsCatched] = useState<CatchedPokemons[]>([]);
 
+  const pokemonList = useCallback(async () => {
+    try {
+      setLoading(true);
+      const pokemonList = await getPokemonList(pageNumber);
+      setFetchedPokemons((prev) => [...prev, ...pokemonList]);
+    } catch (err) {
+      setError('Failed to fetch Pokémon data');
+    } finally {
+      setLoading(false);
+    }
+  }, [pageNumber]);
+
   useEffect(() => {
-    const fetchPokemon = async () => {
+    pokemonList();
+  }, [pokemonList]);
+
+  useEffect(() => {
+    const fetchGlobalPokemons = async () => {
       try {
-        setLoading(true);
-        const pokemonList = await getPokemonList(pageNumber);
-        setFetchedPokemons((prev) => [...prev, ...pokemonList]);
+        const data = await getAllPokemons();
+        setAllPokemons(data.results);
       } catch (err) {
         setError('Failed to fetch Pokémon data');
-      } finally {
-        setLoading(false);
       }
     };
-
-    fetchPokemon();
-  }, [pageNumber]);
+    fetchGlobalPokemons();
+    fetchCatchedPokemons();
+  }, []);
 
   const fetchCatchedPokemons = async () => {
     try {
-      const { data } = await axios.get('api/catched');
+      const data = await getCatchedPokemons();
       setPokemonsCatched(data);
     } catch (err) {
       setError('Failed to fetch Pokémon data');
@@ -49,11 +87,11 @@ export const PokemonProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const addCatchedPokemon = async (pokemon: CatchedPokemons) => {
     try {
-      await axios.post('api/catched', pokemon);
+      const data = await catchPokemon(pokemon);
       toast({
-        title: `You caught ${pokemon.name}!`,
+        title: `You caught ${data.name}!`,
         status: 'success',
-        duration: 9000,
+        duration: 1000,
         isClosable: true,
       });
       fetchCatchedPokemons();
@@ -66,11 +104,11 @@ export const PokemonProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const deleteCatchedPokemon = async (pokemonId: number) => {
     try {
-      const res = await axios.delete(`api/catched/${pokemonId}`);
+      const data = await releasePokemon(pokemonId);
       toast({
-        title: `${res.data}`,
+        title: `${data}`,
         status: 'success',
-        duration: 9000,
+        duration: 1000,
         isClosable: true,
       });
       fetchCatchedPokemons();
@@ -88,6 +126,7 @@ export const PokemonProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <PokemonContext.Provider
       value={{
+        allPokemons,
         fetchedPokemons,
         loading,
         error,
@@ -95,7 +134,6 @@ export const PokemonProvider: React.FC<{ children: React.ReactNode }> = ({
         selectedPokemon,
         setSelectedPokemon,
         pokemonDataModal,
-        allPokemonsQuantity,
         pokemonsCatched,
         setPokemonsCatched,
         addCatchedPokemon,
