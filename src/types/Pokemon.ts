@@ -19,24 +19,29 @@ export interface PokemonApiResponse {
     weight?: number;
     height?: number;
 }
+
 export interface PokeType {
     slot: number;
     type: Ability;
 }
+
 export interface Stat {
     base_stat: number;
     effort: number;
     stat: Ability;
 }
+
 interface Move {
     move: Ability;
     version_group_details: Versiongroupdetail[];
 }
+
 interface Versiongroupdetail {
     level_learned_at: number;
     move_learn_method: Ability;
     version_group: Ability;
 }
+
 interface Ability {
     name: string;
     url: string;

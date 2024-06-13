@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { CatchedPokemons, PokemonInterface, PokemonApiResponse } from "@/types/Pokemon";
+import { CatchedPokemons, PokemonApiResponse } from "@/types/Pokemon";
 import { useDisclosure } from "@chakra-ui/react";
 
 export interface PokemonContextType {

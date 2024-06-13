@@ -1,4 +1,5 @@
-import { Box, Button, Center, SimpleGrid, VStack } from '@chakra-ui/react';
+import React from 'react';
+import { Box, Button, SimpleGrid, VStack } from '@chakra-ui/react';
 import PokemonCard from './PokemonCard';
 import { usePokemon } from '@/context/PokemonContext';
 import PokemonModal from './PokemonModal';

@@ -1,3 +1,4 @@
+import React from 'react';
 import { CatchedPokemons, PokemonApiResponse } from '@/types/Pokemon';
 import {
   Stack,
@@ -20,6 +21,7 @@ export default function PokemonCard({
   const { pokemonsCatched } = usePokemon();
 
   const isCatched = (element: CatchedPokemons) => element.id === pokemon.id;
+  const isCatchedPokemon = pokemonsCatched.some(isCatched);
 
   return (
     <Stack
@@ -29,14 +31,14 @@ export default function PokemonCard({
       w='full'
       borderRadius='xl'
       alignItems='center'
-      bgColor={pokemonsCatched.some(isCatched) ? 'red.200' : 'gray.100'}
+      bgColor={isCatchedPokemon ? 'red.200' : 'gray.100'}
     >
-      {pokemonsCatched.some(isCatched) && (
+      {isCatchedPokemon && (
         <Flex alignItems='center'>
           <Text
             as='b'
             align='center'
-            _firstLetter={{ textTransform: 'uppercase' }}
+            textTransform='capitalize'
           >
             CATCHED!
           </Text>
@@ -48,17 +50,17 @@ export default function PokemonCard({
       <AspectRatio w='full' ratio={1}>
         <Image alt='pokemon image' src={`${IMAGE_URL}/${pokemon.id}.png`} />
       </AspectRatio>
-      <Text as='b' align='center' _firstLetter={{ textTransform: 'uppercase' }}>
+      <Text as='b' align='center' textTransform='capitalize'>
         {pokemon.name}
       </Text>
 
       <HStack>
-        {pokemon?.types.map((type) => (
+        {pokemon?.types.map((type, index) => (
           <Badge
             size='xs'
-            key={type.slot}
-            bgColor={pokemonsCatched.some(isCatched) ? 'red.600' : 'gray.300'}
-            color={pokemonsCatched.some(isCatched) ? 'white' : 'black'}
+            key={index}
+            bgColor={isCatchedPokemon ? 'red.600' : 'gray.300'}
+            color={isCatchedPokemon ? 'white' : 'black'}
             borderRadius='xl'
             p='1'
           >

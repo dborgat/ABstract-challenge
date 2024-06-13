@@ -31,7 +31,7 @@ const Navbar = () => {
             <Link href='/myPokemons'>
               <Flex alignItems='center' gap='5'>
                 <FaArrowRight />
-                <Text>You&apos;ve catched {pokemonsCatched.length} !</Text>
+                <Text>You&apos;ve catched {pokemonsCatched.length}!</Text>
               </Flex>
             </Link>
           )}

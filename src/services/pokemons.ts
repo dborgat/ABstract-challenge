@@ -42,5 +42,3 @@ export const releasePokemon = async (id: number) => {
     const response = await axios.delete(`api/catched/${id}`);
     return response.data;
 };
-
-

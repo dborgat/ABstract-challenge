@@ -1,3 +1,4 @@
+import React from 'react';
 import { usePokemon } from '@/context/PokemonContext';
 import { CatchedPokemons, PokeType, Stat } from '@/types/Pokemon';
 import { IMAGE_URL, infoRequired } from '@/utils/constants';
@@ -57,11 +58,7 @@ export default function PokemonData() {
         <Stack direction='row' justifyContent='space-between'>
           {infoRequired.map((info, index) => (
             <Stack key={index} alignItems='center'>
-              <Text
-                fontSize='xl'
-                as='b'
-                _firstLetter={{ textTransform: 'uppercase' }}
-              >
+              <Text fontSize='xl' as='b' textTransform='capitalize'>
                 {info}
               </Text>
               <Text as='b' fontSize='xl'>
@@ -110,11 +107,7 @@ export default function PokemonData() {
       >
         {selectedPokemon?.stats?.map((stat: Stat) => (
           <Stack key={stat.stat.url}>
-            <Text
-              fontSize='xl'
-              as='b'
-              _firstLetter={{ textTransform: 'uppercase' }}
-            >
+            <Text fontSize='xl' as='b' textTransform='capitalize'>
               {stat.stat.name}
             </Text>
             <Progress

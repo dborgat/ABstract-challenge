@@ -1,6 +1,5 @@
 import { JsonDB, Config } from "node-json-db";
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { stat } from "fs";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const db = new JsonDB(new Config("db", true, false, "/"));
