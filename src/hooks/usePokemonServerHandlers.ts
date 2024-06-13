@@ -21,7 +21,7 @@ export const usePokemonServerHandlers = ({
         try {
             const data = await getCatchedPokemons();
             setPokemonsCatched(data);
-        } catch (err: unknown) {
+        } catch (err) {
             const error = axiosErrorHandler(err as AxiosError);
             setError(error);
         };
