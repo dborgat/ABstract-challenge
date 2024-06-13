@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Spacer, Image, Text } from '@chakra-ui/react';
+import { Flex, Spacer, Image, Text, Center } from '@chakra-ui/react';
 import { usePokemon } from '@/context/PokemonContext';
 
 const Navbar = () => {
@@ -10,23 +10,22 @@ const Navbar = () => {
       bg='tomato'
       w='100%'
       p={4}
-      color='white'
       position='fixed'
       top='0'
       width='100%'
       zIndex='1'
     >
-      <Box p='4'>
-        <Image boxSize='30px' src='/pokeball.svg' alt='Pokeball' />
-      </Box>
+      <Center p='4'>
+        <Image boxSize={[30, 25, 10]} src='/pokeball.svg' alt='Pokeball' />
+      </Center>
       <Spacer />
-      <Box p='4'>
-        <Text fontSize='20px' color='white'>
+      <Center p='4'>
+        <Text fontSize={[18, 25]} color='white' as='b'>
           {pokemonsCatched.length === 0
             ? 'Please catch some Pokemons !'
             : `You have catched ${pokemonsCatched.length} Pokemons !`}
         </Text>
-      </Box>
+      </Center>
     </Flex>
   );
 };
