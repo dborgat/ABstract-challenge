@@ -34,16 +34,12 @@ export default function PokemonData() {
             isChecked={isCatchedPokemon}
             onChange={() => {
               isCatchedPokemon
-                ? deleteCatchedPokemon(selectedPokemon?.id ?? 0)
+                ? deleteCatchedPokemon(selectedPokemon?.id)
                 : addCatchedPokemon({
-                    id: selectedPokemon?.id ?? 0,
-                    name: selectedPokemon?.name ?? '',
+                    id: selectedPokemon?.id,
+                    name: selectedPokemon?.name,
                     image: `${IMAGE_URL}/${selectedPokemon?.id}.png`,
-                    types: selectedPokemon?.types ?? [],
-                    weight: selectedPokemon?.weight ?? 0,
-                    height: selectedPokemon?.height ?? 0,
-                    moves: selectedPokemon?.moves ?? [],
-                    stats: selectedPokemon?.stats ?? [],
+                    types: selectedPokemon?.types,
                   });
             }}
             size='lg'

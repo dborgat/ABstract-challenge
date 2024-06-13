@@ -8,20 +8,16 @@ export interface CatchedPokemons {
     name: string;
     image: string;
     types: PokeType[];
-    weight: number;
-    height: number;
-    moves: Move[];
-    stats: Stat[];
 }
 
 export interface PokemonApiResponse {
-    height: number;
     id: number;
-    moves: Move[];
     name: string;
-    stats: Stat[];
+    stats?: Stat[];
     types: PokeType[];
-    weight: number;
+    moves?: Move[];
+    weight?: number;
+    height?: number;
 }
 export interface PokeType {
     slot: number;

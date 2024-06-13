@@ -3,7 +3,7 @@ import { CatchedPokemons, PokemonInterface, PokemonApiResponse } from "@/types/P
 import { useDisclosure } from "@chakra-ui/react";
 
 export interface PokemonContextType {
-    allPokemons: PokemonInterface[];
+    allPokemonsQuantity: number;
     fetchedPokemons: PokemonApiResponse[];
     loading: boolean;
     error: string | null;

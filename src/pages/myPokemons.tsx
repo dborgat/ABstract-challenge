@@ -12,12 +12,12 @@ const MyPokemons = () => {
       <Stack paddingX={[5, 10]} pt={40} minH='100vh' minW='100vw' spacing={5}>
         <Text fontSize={['2xl', '3xl']} as='b'>
           You haven&apos;t catch any Pokemon yet.
-          <Link href='/'>
-            <Button variant='solid' colorScheme='red'>
-              Let&apos;s catch some Pokemons !
-            </Button>
-          </Link>
         </Text>
+        <Link href='/'>
+          <Button variant='solid' colorScheme='red'>
+            Let&apos;s catch some Pokemons !
+          </Button>
+        </Link>
       </Stack>
     );
   }

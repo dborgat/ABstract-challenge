@@ -6,7 +6,7 @@ import { Alert, AlertIcon } from '@chakra-ui/react';
 
 const PokemonList = () => {
   const {
-    allPokemons,
+    allPokemonsQuantity,
     fetchedPokemons,
     loading,
     error,
@@ -44,12 +44,12 @@ const PokemonList = () => {
           onClick={fetchMorePokemon}
           bgColor='tomato'
           color='white'
-          isDisabled={allPokemons.length === fetchedPokemons.length}
+          isDisabled={allPokemonsQuantity === fetchedPokemons.length}
         >
-          {allPokemons.length === fetchedPokemons.length
+          {allPokemonsQuantity === fetchedPokemons.length
             ? 'You have fetched all the Pokémon!'
             : `Get more Pokemons, fetched ${fetchedPokemons.length} of
-        ${allPokemons.length - fetchedPokemons.length} !`}
+        ${allPokemonsQuantity - fetchedPokemons.length} !`}
         </Button>
         <PokemonModal />
       </VStack>

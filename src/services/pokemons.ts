@@ -6,6 +6,8 @@ export const getPokemonList = async (pageNumber: number) => {
     const response = await axios.get(
         `${BASE_URL}?offset=${pageNumber}&limit=20`
     );
+    const count = response.data.count;
+
     const promises = response.data.results.map(
         (pokemon: PokemonInterface) => axios(pokemon.url)
     );
@@ -13,7 +15,7 @@ export const getPokemonList = async (pageNumber: number) => {
         (res) => res.data
     );
 
-    return fetchedPokemon;
+    return { fetchedPokemon, count };
 };
 
 export const getAllPokemons = async () => {

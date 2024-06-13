@@ -28,7 +28,7 @@ export const PokemonProvider: React.FC<{ children: React.ReactNode }> = ({
   const toast = useToast();
   const pokemonDataModal = useDisclosure();
 
-  const [allPokemons, setAllPokemons] = useState<PokemonInterface[]>([]);
+  const [allPokemonsQuantity, setAllPokemonsQuantity] = useState<number>(0);
   const [fetchedPokemons, setFetchedPokemons] = useState<PokemonApiResponse[]>(
     []
   );
@@ -50,8 +50,11 @@ export const PokemonProvider: React.FC<{ children: React.ReactNode }> = ({
   const pokemonList = useCallback(async () => {
     try {
       setLoading(true);
-      const pokemonList = await getPokemonList(pageNumber);
-      setFetchedPokemons((prev) => [...prev, ...pokemonList]);
+      const { fetchedPokemon, count } = await getPokemonList(pageNumber);
+
+      setFetchedPokemons((prev) => [...prev, ...fetchedPokemon]);
+
+      setAllPokemonsQuantity(count);
     } catch (err) {
       setError('Failed to fetch Pokémon data');
     } finally {
@@ -67,7 +70,7 @@ export const PokemonProvider: React.FC<{ children: React.ReactNode }> = ({
     const fetchGlobalPokemons = async () => {
       try {
         const data = await getAllPokemons();
-        setAllPokemons(data.results);
+        setAllPokemonsQuantity(data.results);
       } catch (err) {
         setError('Failed to fetch Pokémon data');
       }
@@ -126,7 +129,7 @@ export const PokemonProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <PokemonContext.Provider
       value={{
-        allPokemons,
+        allPokemonsQuantity,
         fetchedPokemons,
         loading,
         error,
