@@ -1,5 +1,6 @@
 import { JsonDB, Config } from "node-json-db";
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { stat } from "fs";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const db = new JsonDB(new Config("db", true, false, "/"));
@@ -12,6 +13,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const newPokemon = {
       id: req.body.id,
       name: req.body.name,
+      image: req.body.image,
+      types: req.body.types,
+      weight: req.body.weight,
+      height: req.body.height,
+      moves: req.body.moves,
+      stats: req.body.stats,
     };
     const index = await db.getIndex("/catchedPokemon", Number(newPokemon.id));
     if (index === -1) {

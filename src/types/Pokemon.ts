@@ -6,6 +6,12 @@ export interface PokemonInterface {
 export interface CatchedPokemons {
     id: number;
     name: string;
+    image: string;
+    types: PokeType[];
+    weight: number;
+    height: number;
+    moves: Move[];
+    stats: Stat[];
 }
 
 export interface PokemonApiResponse {
