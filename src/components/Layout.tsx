@@ -1,5 +1,5 @@
 import React from 'react';
-import { VStack } from '@chakra-ui/react';
+import { VStack, Box } from '@chakra-ui/react';
 import Navbar from './Navbar';
 
 interface LayoutProps {

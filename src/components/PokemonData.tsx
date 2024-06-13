@@ -38,6 +38,12 @@ export default function PokemonData() {
                 : addCatchedPokemon({
                     id: selectedPokemon?.id ?? 0,
                     name: selectedPokemon?.name ?? '',
+                    image: `${IMAGE_URL}/${selectedPokemon?.id}.png`,
+                    types: selectedPokemon?.types ?? [],
+                    weight: selectedPokemon?.weight ?? 0,
+                    height: selectedPokemon?.height ?? 0,
+                    moves: selectedPokemon?.moves ?? [],
+                    stats: selectedPokemon?.stats ?? [],
                   });
             }}
             size='lg'
