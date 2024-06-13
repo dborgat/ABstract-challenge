@@ -1,4 +1,4 @@
-import { CatchedPokemons, RootObject } from '@/types';
+import { CatchedPokemons, PokemonApiResponse } from '@/types/Pokemon';
 import {
   Stack,
   Text,
@@ -10,8 +10,13 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { usePokemon } from '@/context/PokemonContext';
+import { IMAGE_URL } from '@/utils/constants';
 
-export default function PokemonCard({ pokemon }: { pokemon: RootObject }) {
+export default function PokemonCard({
+  pokemon,
+}: {
+  pokemon: PokemonApiResponse;
+}) {
   const { pokemonsCatched } = usePokemon();
 
   const isCatched = (element: CatchedPokemons) => element.id === pokemon.id;
@@ -24,9 +29,9 @@ export default function PokemonCard({ pokemon }: { pokemon: RootObject }) {
       w='full'
       borderRadius='xl'
       alignItems='center'
-      bgColor='gray.100'
+      bgColor={pokemonsCatched.some(isCatched) ? 'red.200' : 'gray.100'}
     >
-      {pokemonsCatched && pokemonsCatched.some(isCatched) && (
+      {pokemonsCatched.some(isCatched) && (
         <Flex alignItems='center'>
           <Text
             as='b'
@@ -35,16 +40,13 @@ export default function PokemonCard({ pokemon }: { pokemon: RootObject }) {
           >
             CATCHED!
           </Text>
-          <Box p='4'>
+          <Box paddingX={4}>
             <Image boxSize='30px' src='/pokeball.svg' alt='Pokeball' />
           </Box>
         </Flex>
       )}
       <AspectRatio w='full' ratio={1}>
-        <Image
-          alt='pokemon image'
-          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemon.id}.png`}
-        />
+        <Image alt='pokemon image' src={`${IMAGE_URL}/${pokemon.id}.png`} />
       </AspectRatio>
       <Text as='b' align='center' _firstLetter={{ textTransform: 'uppercase' }}>
         {pokemon.name}
@@ -55,7 +57,8 @@ export default function PokemonCard({ pokemon }: { pokemon: RootObject }) {
           <Badge
             size='xs'
             key={type.slot}
-            bgColor='gray.300'
+            bgColor={pokemonsCatched.some(isCatched) ? 'red.600' : 'gray.300'}
+            color={pokemonsCatched.some(isCatched) ? 'white' : 'black'}
             borderRadius='xl'
             p='1'
           >

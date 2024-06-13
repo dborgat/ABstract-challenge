@@ -1,5 +1,6 @@
 import { usePokemon } from '@/context/PokemonContext';
-import { CatchedPokemons } from '@/types';
+import { CatchedPokemons, PokeType, Stat } from '@/types/Pokemon';
+import { IMAGE_URL, infoRequired } from '@/utils/constants';
 import {
   Box,
   AspectRatio,
@@ -20,15 +21,14 @@ export default function PokemonData() {
     deleteCatchedPokemon,
   } = usePokemon();
 
-  const infoRequired = ['weight', 'height'] as const;
   const isCatched = (element: CatchedPokemons) =>
     element.id === selectedPokemon?.id;
   const isCatchedPokemon = pokemonsCatched.some(isCatched);
 
   return (
-    <Stack spacing='5' pb='5'>
-      <Stack spacing='5' position='relative'>
-        <Box position='absolute' right='0' zIndex='99'>
+    <Stack spacing={['5', '10']} pb='5' direction={['column', 'row']}>
+      <Stack spacing='5'>
+        <Box>
           <Checkbox
             as='b'
             isChecked={isCatchedPokemon}
@@ -40,49 +40,55 @@ export default function PokemonData() {
                     name: selectedPokemon?.name ?? '',
                   });
             }}
+            size='lg'
           >
-            Catched
+            <Text fontSize='xl'>{isCatchedPokemon ? 'Release' : 'Catch'}</Text>
           </Checkbox>
         </Box>
         <AspectRatio w='full' ratio={1}>
           <Image
             alt='pokemon image'
             objectFit='contain'
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${selectedPokemon?.id}.png`}
+            src={`${IMAGE_URL}/${selectedPokemon?.id}.png`}
           />
         </AspectRatio>
         <Stack direction='row' justifyContent='space-between'>
           {infoRequired.map((info, index) => (
             <Stack key={index} alignItems='center'>
               <Text
-                fontSize='sm'
+                fontSize='xl'
                 as='b'
                 _firstLetter={{ textTransform: 'uppercase' }}
               >
                 {info}
               </Text>
-              <Text as='b'>{selectedPokemon?.[info]}</Text>
+              <Text as='b' fontSize='xl'>
+                {selectedPokemon?.[info]}
+              </Text>
             </Stack>
           ))}
 
           <Stack alignItems='center'>
-            <Text fontSize='sm' as='b'>
+            <Text fontSize='xl' as='b'>
               Moves
             </Text>
-            <Text as='b'>{selectedPokemon?.moves?.length}</Text>
+            <Text as='b' fontSize='xl'>
+              {selectedPokemon?.moves?.length}
+            </Text>
           </Stack>
-          <Stack>
-            <Text fontSize='sm' as='b'>
+          <Stack alignItems='center'>
+            <Text fontSize='xl' as='b'>
               Types
             </Text>
             <HStack>
-              {selectedPokemon?.types?.map((type) => (
+              {selectedPokemon?.types?.map((type: PokeType) => (
                 <Badge
-                  size='xs'
+                  size='xl'
                   key={type.slot}
-                  bgColor='gray.300'
                   borderRadius='xl'
                   p='1'
+                  bgColor={isCatchedPokemon ? 'red.600' : 'gray.300'}
+                  color={isCatchedPokemon ? 'white' : 'black'}
                 >
                   {type.type.name}
                 </Badge>
@@ -92,11 +98,18 @@ export default function PokemonData() {
         </Stack>
       </Stack>
 
-      <Stack spacing='5' p='5' bg='gray.100' borderRadius='xl'>
-        {selectedPokemon?.stats?.map((stat) => (
+      <Stack
+        spacing='5'
+        p='5'
+        bg={isCatchedPokemon ? 'red.300' : 'gray.100'}
+        borderRadius='xl'
+        w='full'
+        justifyContent='center'
+      >
+        {selectedPokemon?.stats?.map((stat: Stat) => (
           <Stack key={stat.stat.url}>
             <Text
-              fontSize='xs'
+              fontSize='xl'
               as='b'
               _firstLetter={{ textTransform: 'uppercase' }}
             >
@@ -105,6 +118,7 @@ export default function PokemonData() {
             <Progress
               bg='gray.300'
               borderRadius='full'
+              colorScheme={isCatchedPokemon ? 'red' : 'blue'}
               value={stat.base_stat}
             />
           </Stack>

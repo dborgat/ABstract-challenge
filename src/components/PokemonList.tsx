@@ -6,12 +6,12 @@ import { Alert, AlertIcon } from '@chakra-ui/react';
 
 const PokemonList = () => {
   const {
+    allPokemons,
     fetchedPokemons,
     loading,
     error,
     setSelectedPokemon,
     fetchMorePokemon,
-    allPokemonsQuantity,
     pokemonDataModal,
   } = usePokemon();
 
@@ -31,7 +31,7 @@ const PokemonList = () => {
       paddingBottom='5'
       paddingTop='40'
     >
-      <SimpleGrid spacing='5' columns={{ base: 1, md: 5 }}>
+      <SimpleGrid spacing='5' columns={[1, 2, 3, null, 5]}>
         {fetchedPokemons.map((pokemon) => (
           <Box
             as='button'
@@ -47,12 +47,14 @@ const PokemonList = () => {
       <Button
         isLoading={loading}
         onClick={fetchMorePokemon}
-        isDisabled={allPokemonsQuantity === fetchedPokemons.length}
+        bgColor='tomato'
+        color='white'
+        isDisabled={allPokemons.length === fetchedPokemons.length}
       >
-        {allPokemonsQuantity === fetchedPokemons.length
+        {allPokemons.length === fetchedPokemons.length
           ? 'You have fetched all the Pokémon!'
           : `Get more Pokemons, fetched ${fetchedPokemons.length} of
-        ${allPokemonsQuantity - fetchedPokemons.length} !`}
+        ${allPokemons.length - fetchedPokemons.length} !`}
       </Button>
       <PokemonModal />
     </VStack>
