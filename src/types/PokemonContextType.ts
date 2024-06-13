@@ -6,7 +6,7 @@ export interface PokemonContextType {
     allPokemonsQuantity: number;
     fetchedPokemons: PokemonApiResponse[];
     loading: boolean;
-    error: string | null;
+    error: string | undefined;
     selectedPokemon: PokemonApiResponse;
     setSelectedPokemon: Dispatch<
         SetStateAction<PokemonApiResponse>

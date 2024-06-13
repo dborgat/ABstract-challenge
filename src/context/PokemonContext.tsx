@@ -28,7 +28,7 @@ export const PokemonProvider: React.FC<{ children: React.ReactNode }> = ({
   );
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | undefined>('');
   const [pokemonsCatched, setPokemonsCatched] = useState<CatchedPokemons[]>([]);
 
   const { addCatchedPokemon, deleteCatchedPokemon, fetchCatchedPokemons } =
